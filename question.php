@@ -4,11 +4,13 @@
 ?>
 <hr>
 <h4><?php echo $re[1]; ?> </h4>
-<?php $_SESSION['answer']=$re[2]; ?>
+<?php $_SESSION['answer']=$re[2]; //save answer im session
+
+ ?> 
 
 <script>
-var a = "<?php echo "$re[2]";?>";
-var q="<?php echo "$re[1]"; ?>";
+var a = "<?php echo "$re[2]";?>";  //q = question
+var q="<?php echo "$re[1]"; ?>";  //a = answer
 
 </script>
 
