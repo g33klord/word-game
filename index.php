@@ -15,7 +15,7 @@
 
 	<body>
 		<script language="javascript">
-			var max_time = 20;  //Countdown Time 
+			var max_time = 40;  //Countdown Time 
 			var cinterval;
 			 var points = 0;
 			function countdown_timer(){
@@ -31,7 +31,7 @@
 			cinterval = setInterval('countdown_timer()', 1000);
 		</script> 
 		<div id="content">
-		Seconds:<div id="countdown">20</div>
+		Seconds:<div id="countdown">40</div>
 		Score: <div id="score">0<div>
 		
 		<?php include_once("con.php");  //connect to database
