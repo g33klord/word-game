@@ -8,39 +8,15 @@
     <meta name="Kumar Vimal" content="word game">
 
     <!-- CSS -->
-    <script src="js/jquery-1.9.1.js"> </script>
+    <!--<script src="js/jquery-1.9.1.js"> </script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link href="css/popup.css" rel="stylesheet" type="text/css" media="all" />
-    <script type="text/javascript" src="js/popup.js"></script>
     <script type="text/javascript">
     var points = 0; 
     var QuesCount =0;
     var AnsCount =0;
-    // var wordsArray=[];
-    // var scoreArray=[];
     </script>
     <script src='js/script.js'></script>
-    <!--<script>
-      function onChangeTest(changeVal) {
-        var wl=changeVal.value.length;
-        return wl;
-      }
-      function preventBackspace(e) {
-      var wl=onChangeTest(document.getElementById("recentw"));
-      //document.getElementById('test').innerHTML = wl;
-      
-          var evt = e || window.event;
-          if (evt) {
-            var keyCode = evt.charCode || evt.keyCode;
-      if (keyCode === 8 && wl<=1) {
-                if (evt.preventDefault) {
-                    evt.preventDefault();
-                } else {
-                    evt.returnValue = false;
-                }
-            }
-        }
-    }
-    </script> -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
 
     <style type="text/css">
@@ -116,6 +92,7 @@
         margin-left: 20%;
       }
       span#quit{
+        float: right;
         margin-bottom: 5%;
       }
       #gamearea{
@@ -174,7 +151,12 @@
       background-color: #FAF8F8;
       /*border-radius: 4px 4px 4px 4px;*/
       margin: 0px 0px 0px 10px;
+      height: 400px;
+      overflow: hidden;
     }
+   /* div#history{
+      display: none;
+    }*/
     .icon-remove{
     color: red;
     text-shadow: 1px 1px 1px #ccc;
@@ -182,18 +164,7 @@
     }
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <!-- <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png"> -->
-      <link rel="shortcut icon" href="assets/ico/favicon.png">
+      <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
   </head>
 
   <body>
@@ -214,8 +185,8 @@
           <a class="brand" href="#">The Word Game</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">Game</a></li>
+              <!-- <li class="active"><a href="#">Home</a></li> -->
+              <!-- <li><a href="#about">Game</a></li> -->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -223,40 +194,42 @@
     </div>
 <!-- COUNT DOWN-->
 <script language="javascript">
-      var max_time = 10;  //Countdown Time 
+      var max_time = 60;
       var cinterval;
        var points = 0;
-      function countdown_timer(){
-        max_time--;
-        document.getElementById('countdown').innerHTML = max_time;
-        if(max_time == 0) {  //if time = o sec, clear interval.
-          clearInterval(cinterval);
-          $("#toPopup").fadeIn(0500); // fadein popup div
-          $("#backgroundPopup").css("opacity", "0.7"); // css opacity, supports IE7, IE8
-          $("#backgroundPopup").fadeIn(0001); 
-          document.getElementById('anspopup').innerHTML = AnsCount;
-          document.getElementById('qnpopup').innerHTML = QuesCount;
-          document.getElementById('scorepopup').innerHTML = points;
-          document.getElementById('scorespan').innerHTML = points;
-          var accuracy =0;
-          accuracy = ((QuesCount-AnsCount)/(QuesCount*100));
-          if(QuesCount==0){
-          $('#toPopup').hide();
-          $("#toPopup1").fadeIn(0500); // fadein popup div
-          $("#backgroundPopup").css("opacity", "0.7"); // css opacity, supports IE7, IE8
-          $("#backgroundPopup").fadeIn(0001); 
-          }else{
-          document.getElementById('accurspan').innerHTML = accuracy.toFixed(2);
-          document.getElementById('corrspan').innerHTML = QuesCount;
-          }
-           //alert('Game Over!');
-          //alert('Game Over! <br> Points:' + points + '| Ques Count:' + QuesCount);
-          //document.location = 'index.html';
-        }
-      }
-      cinterval = setInterval('countdown_timer()', 1000);
-    </script> 
+       var quitpop =false;
+             function quitPopup() {
+           quitpop = true
+       }
 
+       function countdown_timer() {
+           max_time--;
+           document.getElementById("countdown").innerHTML = max_time;
+           if (max_time == 0 || quitpop) {
+               clearInterval(cinterval);
+               $("#toPopup").fadeIn(320);
+               $("#backgroundPopup").css("opacity", "0.7");
+               $("#backgroundPopup").fadeIn(1);
+               if (QuesCount == 0) {
+                   $("#toPopup").hide();
+                   $("#toPopup1").fadeIn(320);
+                   $("#backgroundPopup").css("opacity", "0.7");
+                   $("#backgroundPopup").fadeIn(1)
+               } else {
+                   var e = 0;
+                   e = AnsCount / QuesCount * 100;
+                   document.getElementById("anspopup").innerHTML = AnsCount;
+                   document.getElementById("qnpopup").innerHTML = QuesCount;
+                   document.getElementById("scorepopup").innerHTML = points;
+                   document.getElementById("scorespan").innerHTML = points;
+                   document.getElementById("accurspan").innerHTML = e.toFixed(1);
+                   document.getElementById("corrspan").innerHTML = AnsCount
+               }
+           }
+       }
+       cinterval = setInterval("countdown_timer()", 1e3)    
+       </script> 
+<!---##########POPUP ############# -->
     <div id="toPopup"> 
       <div id="popup_content">
         <p> 
@@ -268,8 +241,8 @@
               <tbody>
                 <tr>
             <td id="poptable"><span id="scorep"> Score <br/><strong id="scorespan"></strong> </span></td>
-            <td id="poptable"><span id="accur"> Accuracy<br/><strong id="accurspan"></strong>%  </span></td>
-            <td style="border:none;"><span id="corr"> Correct Answer <br/><strong id ="corrspan"></strong> </span></td>
+            <td id="poptable" style="padding-right: 20px;"><span id="accur"> Accuracy<br/><strong id="accurspan"></strong>%  </span></td>
+            <td style="border:none; padding-left: 34px;"><span id="corr"> Correct Answer <br/><strong id ="corrspan"></strong> </span></td>
           </tr>
         </tbody>
       </table>
@@ -290,15 +263,16 @@
         </p>
       </div>
     </div>
-
+   <!--  <div class="loader"></div> -->
     <div id="backgroundPopup"></div>
-<!-- AJAX and DB Connection-->
+<!---##########POPUP END############# -->
+
+<!-- #########AJAX and DB Connection########-->
 
     <?php include_once("con.php");  //connect to database
       $result = mysqli_query($con,"SELECT count(*) FROM questions"); 
       $re=mysqli_fetch_row($result); //No of rows = re
       $random=rand(1,$re[0]);  //random number between 1 and re.
-      //echo $re;
      ?>
     <script>
       var qid=<?php echo $random; ?>;
@@ -312,6 +286,7 @@
       $( "#question" ).html( msg );
       });
     </script>
+<!-- #########AJAX and DB Connection END########-->
 
   <!-- Begin page content -->
 <div class="container">
@@ -319,12 +294,12 @@
       <div id ="scorebar" class="span12">
         <div class="row">
           <div class="span9">
-            <span id ="time">Time Remaining: <strong id="countdown">10</strong>Seconds</span>
+            <span id ="time">Time Remaining: <strong id="countdown">60</strong>Seconds</span>
             <span id="score">Score: <strong id="scores">0</strong> </span>
             <span id="streak">Current Streaks:<strong id="words">0</strong></span>
           </div>
           <div class="span3">
-            <span id="quit" class="btn btn-primary" >Quit<i class="icon-eject"></i></span>
+            <span id="quit" class="btn btn-primary" onclick="quitPopup()">Quit<i class="icon-eject"></i></span>
           </div>
         </div>
     </div> 
@@ -341,8 +316,15 @@
             <div id="recentWords"> </div>
           </div>          
           <div id="sidebar" class="span3">
-            <div id="about"><strong>The Word Game</strong>
-              <h4><i class="icon-time">&nbsp;</i>Recent Words</h4>
+            <div id="about"><strong>The Word Game</strong><br/>
+              by Kumar Vimal <br>
+              <small>a rendition of <i>Knoword.org</i></small><br/>
+              <small>Recipe: Javascript, jQuery,Ajax,Twitter Bootstrap,HTML5,CSS3,PHP,mySQL and love.<small>
+
+
+              <hr>
+              <div id ="history">
+              <h4><i class="icon-time">&nbsp;&nbsp;</i>Recent Words</h4>
               <table class="table">
                   <tbody id="recw">
                     <tr id ="recwRow">
@@ -350,7 +332,8 @@
                     </tr>
                   </tbody>
                 </table>
-            </id>
+              </div>
+            </div>
           </div>
       </div>
   </div>
@@ -366,50 +349,8 @@
       </div>
     </div>
 
-      <script>
-      function onChangeTest(changeVal) {
-        var wl=changeVal.value.length;
-        return wl;
-      }
-      function preventBackspace(e) {
-      var wl=onChangeTest(document.getElementById("qin"));
-          var evt = e || window.event;
-          if (evt) {
-            var keyCode = evt.charCode || evt.keyCode;
-      if (keyCode === 8 && wl<=1) {
-                if (evt.preventDefault) {
-                    evt.preventDefault();
-                } else {
-                    evt.returnValue = false;
-                }
-            }
-        }
-    }
-
-   /* for(i=wordsArray.length;i<0;i--)
-    {
-  $('<td/>').prepend(wordsArray[i]).prependTo('tr#recentw');
-  $('<td/>').prepend('('scoreArray[i]+'points)').prependTo('tr#recentw');
-
-    }*/
-    </script>
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-   <!-- <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap-transition.js"></script>
-    <script src="assets/js/bootstrap-alert.js"></script>
-    <script src="assets/js/bootstrap-modal.js"></script>
-    <script src="assets/js/bootstrap-dropdown.js"></script>
-    <script src="assets/js/bootstrap-scrollspy.js"></script>
-    <script src="assets/js/bootstrap-tab.js"></script>
-    <script src="assets/js/bootstrap-tooltip.js"></script>
-    <script src="assets/js/bootstrap-popover.js"></script>
-    <script src="assets/js/bootstrap-button.js"></script>
-    <script src="assets/js/bootstrap-collapse.js"></script>
-    <script src="assets/js/bootstrap-carousel.js"></script>
-    <script src="assets/js/bootstrap-typeahead.js"></script> -->
-
+<script type="text/javascript">
+function onChangeTest(e){var t=e.value.length;return t}function preventBackspace(e){var t=onChangeTest(document.getElementById("qin"));var n=e||window.event;if(n){var r=n.charCode||n.keyCode;if(r===8&&t<=1){if(n.preventDefault){n.preventDefault()}else{n.returnValue=false}}}}
+</script>
   </body>
 </html>
