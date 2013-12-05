@@ -42,6 +42,10 @@ $(document).ready(function () {
             AnsCount++;
             document.getElementById("words").innerHTML = AnsCount;
             $("<tr/>").prepend('<td> <span style="color:green;">&#10004;</span>' + a + "</td><td>(+10 points)</td> ").prependTo("tbody#recw")
+
+        }
+        if(QuesCount>4){
+            return show();
         }
     });
     $("button#skip").click(function () {
@@ -63,5 +67,8 @@ $(document).ready(function () {
         document.getElementById("scores").innerHTML = points;
         $('<p/ id="recentW">').prepend('<h2><span style="color:red;">&#10008;</span> ' + a + "</h2> </br> " + q).prependTo("#recentWords");
         $("<tr/>").prepend('<td> <span style="color:red;">&#10008;</span> ' + a + "</td><td>(-10 points)</td>").prependTo("tbody#recw")
+        if(QuesCount>4){
+            return show();
+        }
     })
 })

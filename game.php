@@ -7,8 +7,7 @@
     <meta name="description" content="word game">
     <meta name="Kumar Vimal" content="word game">
 
-    <!-- CSS -->
-    <!--<script src="js/jquery-1.9.1.js"> </script> -->
+    <!--<script src="js/jquery-1.9.1.js"> </script> -->  <!-- if there is internet-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link href="css/popup.css" rel="stylesheet" type="text/css" media="all" />
     <script type="text/javascript">
@@ -154,6 +153,12 @@
       height: 400px;
       overflow: hidden;
     }
+
+    #bazzinga img{
+      height: 300px;
+      width: 300px;
+
+    }
    /* div#history{
       display: none;
     }*/
@@ -198,37 +203,40 @@
       var cinterval;
        var points = 0;
        var quitpop =false;
-             function quitPopup() {
-           quitpop = true
-       }
+       function quitPopup() {
+    quitpop = true
+}
 
-       function countdown_timer() {
-           max_time--;
-           document.getElementById("countdown").innerHTML = max_time;
-           if (max_time == 0 || quitpop) {
-               clearInterval(cinterval);
-               $("#toPopup").fadeIn(320);
-               $("#backgroundPopup").css("opacity", "0.7");
-               $("#backgroundPopup").fadeIn(1);
-               if (QuesCount == 0) {
-                   $("#toPopup").hide();
-                   $("#toPopup1").fadeIn(320);
-                   $("#backgroundPopup").css("opacity", "0.7");
-                   $("#backgroundPopup").fadeIn(1)
-               } else {
-                   var e = 0;
-                   e = AnsCount / QuesCount * 100;
-                   document.getElementById("anspopup").innerHTML = AnsCount;
-                   document.getElementById("qnpopup").innerHTML = QuesCount;
-                   document.getElementById("scorepopup").innerHTML = points;
-                   document.getElementById("scorespan").innerHTML = points;
-                   document.getElementById("accurspan").innerHTML = e.toFixed(1);
-                   document.getElementById("corrspan").innerHTML = AnsCount
-               }
-           }
-       }
-       cinterval = setInterval("countdown_timer()", 1e3)    
-       </script> 
+function countdown_timer() {
+    max_time--;
+    document.getElementById("countdown").innerHTML = max_time;
+    if (max_time == 0 || quitpop) {  //if time = o  || click on Quit button
+        clearInterval(cinterval);
+        $("#toPopup").fadeIn(320);
+        $("#backgroundPopup").css("opacity", "0.7");
+        $("#backgroundPopup").fadeIn(1);
+        if (QuesCount == 0) {
+            //show();
+            $("#toPopup").hide();
+            $("#toPopup1").fadeIn(320);
+            $("#backgroundPopup").css("opacity", "0.7");
+            $("#backgroundPopup").fadeIn(1)
+        } else {
+            var e = 0;
+            e = AnsCount / QuesCount * 100;
+            document.getElementById("anspopup").innerHTML = AnsCount;
+            document.getElementById("qnpopup").innerHTML = QuesCount;
+            document.getElementById("scorepopup").innerHTML = points;
+            document.getElementById("scorespan").innerHTML = points;
+            document.getElementById("accurspan").innerHTML = e.toFixed(1);
+            document.getElementById("corrspan").innerHTML = AnsCount
+            //return show();
+        }
+    }
+}
+cinterval = setInterval("countdown_timer()", 1e3)
+    </script> 
+    
 <!---##########POPUP ############# -->
     <div id="toPopup"> 
       <div id="popup_content">
@@ -290,6 +298,8 @@
 
   <!-- Begin page content -->
 <div class="container">
+  <!-- <button onclick="return show();" >SHOW</button>
+    <button onclick="return hide();" >HIDE</button> -->
     <div class="row">
       <div id ="scorebar" class="span12">
         <div class="row">
@@ -323,7 +333,7 @@
 
 
               <hr>
-              <div id ="history">
+              <div id ="history" style="display:none;">
               <h4><i class="icon-time">&nbsp;&nbsp;</i>Recent Words</h4>
               <table class="table">
                   <tbody id="recw">
@@ -332,6 +342,9 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div id="bazzinga">
+                <img src="img/bazzinga.jpg" />
               </div>
             </div>
           </div>
@@ -351,6 +364,16 @@
 
 <script type="text/javascript">
 function onChangeTest(e){var t=e.value.length;return t}function preventBackspace(e){var t=onChangeTest(document.getElementById("qin"));var n=e||window.event;if(n){var r=n.charCode||n.keyCode;if(r===8&&t<=1){if(n.preventDefault){n.preventDefault()}else{n.returnValue=false}}}}
+</script>
+
+<script type="text/javascript">
+ function show() { 
+        if(document.getElementById('history').style.display=='none') { 
+            document.getElementById('bazzinga').style.display='none'; 
+            document.getElementById('history').style.display='block'; 
+        } 
+        return false;
+    } 
 </script>
   </body>
 </html>
